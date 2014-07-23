@@ -5,7 +5,7 @@ import htmlPage
 import content.index,content.db,content.fincom
 
 # TODO put into config
-spbBudgetXlsPath='..'
+spbBudgetXlsPath='../spb-budget-xls'
 
 if __name__=='__main__':
 	linker=Linker('filelists',{
