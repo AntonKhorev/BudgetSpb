@@ -11,7 +11,7 @@ if __name__=='__main__':
 	linker=Linker('filelists',{
 		'csv':['csv'],
 		'xls':['xls'],
-		'db':['sql','xlsx'],
+		'db':['zip','sql','xlsx'],
 	})
 	htmlPage.HtmlPage('index.html','Данные бюджета Санкт-Петербурга',content.index.content,linker).write('output/index.html')
 	htmlPage.HtmlPage('xls.html','Ведомственная структура расходов бюджета Санкт-Петербурга в csv и xls',htmlPage.importContent(spbBudgetXlsPath+'/index.html'),linker).write('output/xls.html')
