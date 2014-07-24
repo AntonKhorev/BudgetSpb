@@ -49,80 +49,14 @@ class HtmlPage:
 				w(x)
 			return wn
 
-		w(
-"""<!DOCTYPE HTML>
-<html>
-<head>
-<meta charset='utf-8' />
-"""
-		)
+		w("<!DOCTYPE HTML>\n")
+		w("<html>\n")
+		w("<head>\n")
+		w("<meta charset='utf-8' />\n")
 		w("<title>"+self.title+"</title>\n")
-		w(
-"""<style>
-nav {
-	background: #246;
-	color: #DDD;
-}
-nav ul {
-	margin: 0;
-	padding: 1em;
-}
-nav li {
-	display: inline-block;
-	list-style: none;
-	padding: 0 1em;
-}
-nav li.active {
-	background: #48C;
-	color: #FFF;
-}
-nav :link, nav :visited {
-	color: #DDD;
-}
-nav :link:hover, nav :visited:hover {
-	color: #FFF;
-}
-:target {
-	background: #FFC;
-}
-sup {
-	font-size: .7em;
-}
-sup :link {
-	text-decoration: none;
-}
-sup :link:hover {
-	text-decoration: underline;
-}
-table {
-	border: none;
-	border-collapse: collapse;
-}
-td {
-	vertical-align: top;
-}
-th {
-	vertical-align: bottom;
-}
-th,td {
-	padding: .5em;
-	border-left: dotted 1px gray;
-}
-tbody tr:first-child td {
-	border-top: dotted 1px gray;
-}
-thead tr:first-child th:first-child,
-tbody tr:first-child td:first-child {
-	border-left: none;
-}
-span {
-	border-bottom: 1px gray dotted;
-}
-</style>
-</head>
-<body>
-"""
-		)
+		w("<link rel='stylesheet' href='main.css' />\n")
+		w("</head>\n")
+		w("<body>\n")
 		w("<nav><ul>")
 		for link,text in (
 			('index.html','Главная'),
@@ -143,11 +77,8 @@ span {
 
 		self.content(makeFns)
 
-		w(
-"""</body>
-</html>
-"""
-		)
+		w("</body>\n")
+		w("</html>\n")
 
 		file.close()
 
