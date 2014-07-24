@@ -10,18 +10,27 @@
 <h1>База данных и таблицы расходов бюджета Санкт-Петербурга</h1>
 <p>Данные, использованные для построения базы, прошли несколько уровней обработки. Эти уровни пронумерованы так, что на каждом из них в качестве исходных данных используются только данные непосредственно предшествующего уровня. Список уровней:</p>
 <dl>
-<dt><code>1-sources</code></dt><dd>исходные данные — документы с различных сайтов</dd></dd>
+<dt><code><a href='#1-sources'>1-sources</a></code></dt><dd>исходные данные — документы с различных сайтов</dd></dd>
 <dt><code>2-tables</code></dt><dd>таблицы, извлечённые из документов</dd></dd>
 <dt><code>3-db</code></dt><dd>база данных, полученная из таблиц</dd></dd>
 <dt><code>4-xls</code></dt><dd>первый вариант отчётов из базы данных — <abbr title='Excel Binary File Format, бинарный формат файлов Excel'>xls</abbr>- и <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
 <dt><code>4-xlsx</code></dt><dd>второй, рекомендуемый вариант отчётов из базы данных — только <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
 </dl>
-<p>Так как промежуточные данные тоже представляют интерес, здесь приводятся результаты каждого этапа.</p>
+<p>Так как промежуточные данные тоже представляют интерес, здесь приводятся результаты каждого этапа. На данный момент собраны данные для 2014 года.</p>
+<h2 id='1-sources'>Исходные данные</h2><p>Исходными данными являются документы в том виде, в котором они были опубликованы на	официальных сайтах. Документы взяты из следующих источников:</p>
+<ul>
+<li>Раздел <a href='http://www.fincom.spb.ru/comfin/budjet/budget_for_people.htm' class='external'>«Бюджет для граждан»</a> сайта <a href='http://www.fincom.spb.ru/' class='external'>Комитета финансов Санкт-Петербурга</a>, откуда использованы <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы для таблиц расходов бюджета. Это позволяет установить, какими планировались расходы до рассмотрения в Законодательном Собрании, и какими они стали после. К сожалению, эти данные не полны.</li>
+<li><a href='xls.html'>Проект по извлечению таблиц из <abbr title='Portable Document Format'>pdf</abbr>-файлов</a>, откуда берутся таблицы в формате <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr> для недостающих данных «Бюджета для граждан».</li>
+<li>Сайт <a href='http://assembly.spb.ru/' class='external'>Законодательного Собрания Санкт-Петербурга</a>, откуда берутся документы с поправками к бюджету. Это позволяет проследить, как менялись расходы бюджета при рассмотрении в <abbr title='Законодательном Собрании'>ЗС</abbr>. Полученные документы были вручную преобразованы в формат <abbr title='OpenDocument Text'>odt</abbr>. Короткие поправки в исходные данные не включены, они введены вручную и добавляются на следующем уровне.</li>
+</ul>
+<dl>
+<dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAD70JC3eQ6mKFNqgUcFh8o7a/db/1-sources.out.zip' class='file'>1-sources.out.zip</a></code></dt><dd>архив с документами</dd>
+</dl>
 <h2>Предыдущие версии файлов</h2>
 <dl>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AABhPMABJXrqZLNhidiZX0VJa/db/db.v1.zip' class='file'>db.v1.zip</a></code></dt><dd>выпуск к принятию первоначального варианта закона о бюджете 2014 года</dd>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AADtnbKci8NHgsdWFSCiEM3da/db/db.v2.zip' class='file'>db.v2.zip</a></code></dt><dd>выпуск к принятию первой корректировки закона о бюджете 2014 года</dd>
 </dl>
-<p><a href='https://www.dropbox.com/sh/zgnevck3cij1gm0/AABdfNdrzoimxiWDe_DDPfpCa/db'>Ссылка на папку dropbox</a> (на случай, если они поменяют ссылки).</p>
+<p><a href='https://www.dropbox.com/sh/zgnevck3cij1gm0/AABdfNdrzoimxiWDe_DDPfpCa/db' class='external'>Ссылка на папку dropbox</a> (на случай, если они поменяют ссылки).</p>
 </body>
 </html>
