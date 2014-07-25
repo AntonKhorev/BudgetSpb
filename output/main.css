@@ -57,3 +57,8 @@ tbody tr:first-child td:first-child {
 span {
 	border-bottom: 1px gray dotted;
 }
+dl.downloads {
+	padding: 1em;
+	border: 3px double #484;
+	background: #CFC;
+}
