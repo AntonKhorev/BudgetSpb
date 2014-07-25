@@ -5,6 +5,7 @@ def content(makeFns):
 	abbrPdf="<abbr title='Portable Document Format'>pdf</abbr>"
 	abbrCsv="<abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr>"
 	abbrOdt="<abbr title='OpenDocument Text'>odt</abbr>"
+	abbrSql="<abbr title='Structured Query Language, структурированный язык запросов'>sql</abbr>"
 	def wp(x):
 		w("<p>"+x+"</p>\n")
 	def wli(x):
@@ -48,9 +49,9 @@ def content(makeFns):
 	wDefCodeList((
 		(a("#1-sources","1-sources"),"исходные данные — документы с различных сайтов</dd>"),
 		(a("#2-tables","2-tables"),"таблицы, извлечённые из документов</dd>"),
-		("3-db","база данных, полученная из таблиц</dd>"),
-		("4-xls","первый вариант отчётов из базы данных — "+abbrXls+"- и "+abbrXlsx+"-файлы</dd>"),
-		("4-xlsx","второй, рекомендуемый вариант отчётов из базы данных — только "+abbrXlsx+"-файлы</dd>"),
+		(a("#3-db","3-db"),"база данных, полученная из таблиц</dd>"),
+		(a("#4-xls","4-xls"),"первый вариант отчётов из базы данных — "+abbrXls+"- и "+abbrXlsx+"-файлы</dd>"),
+		(a("#4-xlsx","4-xlsx"),"второй, рекомендуемый вариант отчётов из базы данных — только "+abbrXlsx+"-файлы</dd>"),
 	))
 	wp(
 		"Так как промежуточные данные тоже представляют интерес, здесь приводятся результаты каждого этапа. "
@@ -158,6 +159,23 @@ def content(makeFns):
 	))
 	wDownloadFileList((
 		("2-tables.out.zip","архив с таблицами"),
+	))
+
+	w("<h2 id='3-db'>База данных</h2>\n")
+	wDownloadFileList((
+		("db.sql","база данных в формате "+abbrSql+" для <abbr title='системы управления базами данных'>СУБД</abbr> "+ae('http://www.sqlite.org/',"SQLite")),
+	))
+
+	w("<h2 id='4-xls'>Первый вариант отчётов</h2>\n")
+	wp("Данные извлечены в "+abbrXls+" и "+abbrXlsx+"-таблицы для просмотра.")
+	wDownloadFileList((
+		("4-xls.out.zip","архив с таблицами"),
+	))
+
+	w("<h2 id='4-xlsx'>Второй вариант отчётов</h2>\n")
+	wDownloadFileList((
+		("departments.xlsx","Ведомственная структура расходов бюджета Санкт-Петербурга"),
+		("sections.xlsx","Распределение бюджетных ассигнований бюджета Санкт-Петербурга"),
 	))
 
 	w("<h2>Предыдущие версии файлов</h2>\n")
