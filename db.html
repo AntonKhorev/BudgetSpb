@@ -11,7 +11,7 @@
 <p>Данные, использованные для построения базы, прошли несколько уровней обработки. Эти уровни пронумерованы так, что на каждом из них в качестве исходных данных используются только данные непосредственно предшествующего уровня. Список уровней:</p>
 <dl>
 <dt><code><a href='#1-sources'>1-sources</a></code></dt><dd>исходные данные — документы с различных сайтов</dd></dd>
-<dt><code>2-tables</code></dt><dd>таблицы, извлечённые из документов</dd></dd>
+<dt><code><a href='#2-tables'>2-tables</a></code></dt><dd>таблицы, извлечённые из документов</dd></dd>
 <dt><code>3-db</code></dt><dd>база данных, полученная из таблиц</dd></dd>
 <dt><code>4-xls</code></dt><dd>первый вариант отчётов из базы данных — <abbr title='Excel Binary File Format, бинарный формат файлов Excel'>xls</abbr>- и <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
 <dt><code>4-xlsx</code></dt><dd>второй, рекомендуемый вариант отчётов из базы данных — только <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
@@ -23,11 +23,25 @@
 <li><a href='xls.html'>Проект по извлечению таблиц из <abbr title='Portable Document Format'>pdf</abbr>-файлов</a>, откуда берутся таблицы в формате <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr> для недостающих данных «Бюджета для граждан».</li>
 <li>Сайт <a href='http://assembly.spb.ru/' class='external'>Законодательного Собрания Санкт-Петербурга</a>, откуда берутся документы с поправками к бюджету. Это позволяет проследить, как менялись расходы бюджета при рассмотрении в <abbr title='Законодательном Собрании'>ЗС</abbr>. Полученные документы были вручную преобразованы в формат <abbr title='OpenDocument Text'>odt</abbr>. Короткие поправки в исходные данные не включены, они введены вручную и добавляются на следующем уровне.</li>
 </ul>
-<dl>
+<dl class='downloads'>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAD70JC3eQ6mKFNqgUcFh8o7a/db/1-sources.out.zip' class='file'>1-sources.out.zip</a></code></dt><dd>архив с документами</dd>
 </dl>
-<h2>Предыдущие версии файлов</h2>
+<h2 id='2-tables'>Таблицы из исходных документов</h2><p>На этом уровне формируются <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr>-таблицы, из которых далее можно будет собрать базу данных. Первая строка каждого <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr>файла содержит названия столбцов. Таблицы размещены в двух каталогах:</p>
 <dl>
+<dt><code>content</code></dt><dd>Собственно таблицы из документов. В основном это таблицы с изменениями ведомственной структуры расходов бюджета.</dd>
+<dt><code>meta</code></dt><dd>Таблицы с данными о самих документах.</dd>
+</dl>
+<p>Далее рассматриваются форматы отдельных файлов.</p>
+<dl>
+<dt id='2-tables-meta-authors'><code>meta/authors.csv</code></dt><dd>Авторы, которые внесли в <abbr title='Законодательное Собрание'>ЗС</abbr> какой-либо документ или поправку. Столбцы:<dl><dt><code>authorId</code></dt><dd>числовой идентификатор автора для связи с <a href='#2-tables-meta-documents'>таблицей документов</a></dd><dt><code>authorShortName</code></dt><dd>короткое имя автора для написания в узких столбцах таблиц документов, получаемых на последнем уровне</dd><dt><code>authorLongName</code></dt><dd>имя автора в том виде, в котором оно указано на сайте <abbr title='Законодательного Собрания'>ЗС</abbr></dd></dl></dd>
+<dt id='2-tables-meta-documents'><code>meta/documents.csv</code></dt><dd>Документы — проекты законов и поправки. Столбцы:<dl><dt><code>documentNumber</code></dt><dd>номер документа в <abbr title='Законодательном Собрании'>ЗС</abbr></dd><dt><code>documentDate</code></dt><dd>дата внесения документа в расширенном формате ISO (YYYY-MM-DD)</dd><dt><code>stageNumber</code></dt><dd>номер варианта закона (0 — первоначальный закон, 1 — первая корректировка, 2 — вторая и т.д.) для связи с <a href='#2-tables-meta-stages'>таблицей вариантов законов</a></dd><dt><code>amendmentFlag</code></dt><dd>тип проекта/поправки (0 — проект, после которого идут 1 — отдельно внесённые поправки, затем 2 — прочие изменения, приводящие проект закона к конечному виду, в котором он принимается)</dd><dt><code>authorId</code></dt><dd>числовой идентификатор автора (если автор известен, для amendmentFlag=2 считается неизвестным)</dd><dt><code>documentAssemblyUrl</code></dt><dd>ссылка на документ на сайте <abbr title='Законодательного Собрания'>ЗС</abbr>, содержащий данные (если он там опубликован)</dd></dl></dd>
+<dt id='2-tables-meta-stages'><code>meta/stages.csv</code></dt><dd>Варианты законов (на данный момент — одного закона 2014 года). Столбцы:<dl><dt><code>stageNumber</code></dt><dd>номер варианта закона</dd><dt><code>stageAssemblyUrl</code></dt><dd>ссылка на страницу с документами, поступившими в <abbr title='Законодательное Собрание'>ЗС</abbr> во время рассмотрения проекта этого варианта</dd></dl></dd>
+</dl>
+<dl class='downloads'>
+<dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAD1OOiMH3bkWrcSJRxYgGaTa/db/2-tables.out.zip' class='file'>2-tables.out.zip</a></code></dt><dd>архив с таблицами</dd>
+</dl>
+<h2>Предыдущие версии файлов</h2>
+<dl class='downloads'>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AABhPMABJXrqZLNhidiZX0VJa/db/db.v1.zip' class='file'>db.v1.zip</a></code></dt><dd>выпуск к принятию первоначального варианта закона о бюджете 2014 года</dd>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AADtnbKci8NHgsdWFSCiEM3da/db/db.v2.zip' class='file'>db.v2.zip</a></code></dt><dd>выпуск к принятию первой корректировки закона о бюджете 2014 года</dd>
 </dl>
