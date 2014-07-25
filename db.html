@@ -18,9 +18,9 @@
 <dl>
 <dt><code><a href='#1-sources'>1-sources</a></code></dt><dd>исходные данные — документы с различных сайтов</dd></dd>
 <dt><code><a href='#2-tables'>2-tables</a></code></dt><dd>таблицы, извлечённые из документов</dd></dd>
-<dt><code>3-db</code></dt><dd>база данных, полученная из таблиц</dd></dd>
-<dt><code>4-xls</code></dt><dd>первый вариант отчётов из базы данных — <abbr title='Excel Binary File Format, бинарный формат файлов Excel'>xls</abbr>- и <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
-<dt><code>4-xlsx</code></dt><dd>второй, рекомендуемый вариант отчётов из базы данных — только <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
+<dt><code><a href='#3-db'>3-db</a></code></dt><dd>база данных, полученная из таблиц</dd></dd>
+<dt><code><a href='#4-xls'>4-xls</a></code></dt><dd>первый вариант отчётов из базы данных — <abbr title='Excel Binary File Format, бинарный формат файлов Excel'>xls</abbr>- и <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
+<dt><code><a href='#4-xlsx'>4-xlsx</a></code></dt><dd>второй, рекомендуемый вариант отчётов из базы данных — только <abbr title='Excel 2007 workbook'>xlsx</abbr>-файлы</dd></dd>
 </dl>
 <p>Так как промежуточные данные тоже представляют интерес, здесь приводятся результаты каждого этапа. На данный момент собраны данные для 2014 года.</p>
 <h2 id='1-sources'>Исходные данные</h2><p>Исходными данными являются документы в том виде, в котором они были опубликованы на	официальных сайтах. Документы взяты из следующих источников:</p>
@@ -32,10 +32,28 @@
 <dl class='downloads'>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAD70JC3eQ6mKFNqgUcFh8o7a/db/1-sources.out.zip' class='file'>1-sources.out.zip</a></code></dt><dd>архив с документами</dd>
 </dl>
-<h2 id='2-tables'>Таблицы из исходных документов</h2><p>На этом уровне формируются <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr>-таблицы, из которых далее можно будет собрать базу данных. Первая строка каждого <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr>файла содержит названия столбцов. Таблицы размещены в двух каталогах:</p>
+<h2 id='2-tables'>Таблицы из исходных документов</h2><p>На этом уровне формируются <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr>-таблицы, из которых далее можно будет собрать базу данных. Первая строка каждого <abbr title='comma-separated values, значения, разделённые запятыми'>csv</abbr>-файла содержит названия столбцов. Таблицы размещены в двух каталогах:</p>
 <dl>
 <dt><code>content</code></dt><dd>Собственно таблицы из документов. В основном это таблицы с изменениями ведомственной структуры расходов бюджета.</dd>
 <dt><code>meta</code></dt><dd>Таблицы с данными о самих документах.</dd>
+</dl>
+<p>Файлы каталога <code>content</code> содержат часть информации в своих именах (<code><em>filename</em></code>):</p>
+<pre>
+<code><em>filename</em> ::= <em>year</em> "." <em>documentNumber</em> "." <em>paragraphNumber</em> "." <em>tableType</em> "." <em>operationType</em> [ "(" <em>operationArguments</em> ")" ] ".csv"</code>
+<code><em>year</em> ::= <em>число</em></code>
+<code><em>documentNumber</em> ::= <em>число</em></code>
+<code><em>paragraphNumber</em> ::= <em>число</em> { "." <em>число</em> }</code>
+<code><em>tableType</em> ::= <em>строка</em></code>
+<code><em>operationType</em> ::= <em>строка</em></code>
+<code><em>operationArguments</em> ::= <em>число</em> { "," <em>число</em> }</code>
+</pre>
+<p>Здесь <code><em>число</em></code> — последовательность из одной или более цифр, а <code><em>строка</em></code> — последовательность из одной или более строчных латинских букв.</p>
+<p>Описания элементов имён файлов:</p>
+<dl>
+<dt><code><em>year</em></code></dt><dd>основной год, для которого рассматривается бюджет (пока всегда 2014); не является годом планового периода</dd>
+<dt><code><em>documentNumber</em></code></dt><dd>номер документа в <abbr title='Законодательном Собрании'>ЗС</abbr></dd>
+<dt><code><em>paragraphNumber</em></code></dt><dd>номер приложения или пункта в документе</dd>
+<dt><code><em>tableType</em></code></dt><dd>тип таблицы из документа, это может быть:<dl><dt><code>department</code></dt><dd>распределение расходов по комитетам и целевым статьям</dd><dt><code>section</code></dt><dd>распределение тех же расходов по разделам, приводится не для всех документов</dd></dl></dd>
 </dl>
 <p>Далее рассматриваются форматы отдельных файлов.</p>
 <dl>
@@ -45,6 +63,20 @@
 </dl>
 <dl class='downloads'>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAD1OOiMH3bkWrcSJRxYgGaTa/db/2-tables.out.zip' class='file'>2-tables.out.zip</a></code></dt><dd>архив с таблицами</dd>
+</dl>
+<h2 id='3-db'>База данных</h2>
+<dl class='downloads'>
+<dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAAqZSkbCAq0QiXNx7SRcamxa/db/db.sql' class='file'>db.sql</a></code></dt><dd>база данных в формате <abbr title='Structured Query Language, структурированный язык запросов'>sql</abbr> для <abbr title='системы управления базами данных'>СУБД</abbr> <a href='http://www.sqlite.org/' class='external'>SQLite</a></dd>
+</dl>
+<h2 id='4-xls'>Первый вариант отчётов</h2>
+<p>Данные извлечены в <abbr title='Excel Binary File Format, бинарный формат файлов Excel'>xls</abbr> и <abbr title='Excel 2007 workbook'>xlsx</abbr>-таблицы для просмотра.</p>
+<dl class='downloads'>
+<dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AACSIvNR2yyKqoqX_jzY_stia/db/4-xls.out.zip' class='file'>4-xls.out.zip</a></code></dt><dd>архив с таблицами</dd>
+</dl>
+<h2 id='4-xlsx'>Второй вариант отчётов</h2>
+<dl class='downloads'>
+<dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAD748tUHyg_ygvg33KyRELYa/db/departments.xlsx' class='file'>departments.xlsx</a></code></dt><dd>Ведомственная структура расходов бюджета Санкт-Петербурга</dd>
+<dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AABR26YSyjmhg0FxQeRfYkzUa/db/sections.xlsx' class='file'>sections.xlsx</a></code></dt><dd>Распределение бюджетных ассигнований бюджета Санкт-Петербурга</dd>
 </dl>
 <h2>Предыдущие версии файлов</h2>
 <dl class='downloads'>
