@@ -12,6 +12,7 @@ class Linker:
 				if tag!='a':
 					return
 				for a,v in attrs:
+					v=re.sub(r'\?dl=0$','',v) # dropbox special
 					if a!='href':
 						continue
 					u=urllib.parse.unquote(v)
