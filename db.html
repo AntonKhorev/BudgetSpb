@@ -39,32 +39,34 @@
 </dl>
 <p>Файлы каталога <code>content</code> содержат часть информации в своих именах (<code><em>filename</em></code>):</p>
 <pre>
-<code><em>filename</em> ::= <em>year</em> "." <em>documentNumber</em> "." <em>paragraphNumber</em> "." <em>tableType</em> "." <em>operationType</em> [ "(" <em>operationArguments</em> ")" ] ".csv"</code>
-<code><em>year</em> ::= <em>число</em></code>
+<code><em>filename</em> ::= <em>stageYear</em> "." <em>documentNumber</em> "." <em>paragraphNumber</em> "." <em>tableType</em> "." <em>actionType</em> [ "(" <em>actionArguments</em> ")" ] ".csv"</code>
+<code><em>stageYear</em> ::= <em>число</em></code>
 <code><em>documentNumber</em> ::= <em>число</em></code>
 <code><em>paragraphNumber</em> ::= <em>число</em> { "." <em>число</em> }</code>
 <code><em>tableType</em> ::= <em>строка</em></code>
-<code><em>operationType</em> ::= <em>строка</em></code>
-<code><em>operationArguments</em> ::= <em>число</em> { "," <em>число</em> }</code>
+<code><em>actionType</em> ::= <em>строка</em></code>
+<code><em>actionArguments</em> ::= <em>число</em> { "," <em>число</em> }</code>
 </pre>
 <p>Здесь <code><em>число</em></code> — последовательность из одной или более цифр, а <code><em>строка</em></code> — последовательность из одной или более строчных латинских букв.</p>
 <p>Описания элементов имён файлов:</p>
 <dl>
-<dt><code><em>year</em></code></dt><dd>основной год, для которого рассматривается бюджет (пока всегда 2014); не является годом планового периода</dd>
+<dt><code><em>stageYear</em></code></dt><dd>основной год, для которого рассматривается бюджет; не является годом планового периода</dd>
 <dt><code><em>documentNumber</em></code></dt><dd>номер документа в <abbr title='Законодательном Собрании'>ЗС</abbr></dd>
 <dt><code><em>paragraphNumber</em></code></dt><dd>номер приложения или пункта в документе</dd>
 <dt><code><em>tableType</em></code></dt><dd>тип таблицы из документа, это может быть:<dl><dt><code>department</code></dt><dd>распределение расходов по комитетам и целевым статьям</dd><dt><code>section</code></dt><dd>распределение тех же расходов по разделам, приводится не для всех документов</dd></dl></dd>
+<dt><code><em>actionType</em></code></dt><dd>тип операции, изменяющей данные расходов бюджета; соответствует виду поправки к бюджету:<dl><dt><code>set</code></dt><dd>сделать все значения для годов, указанных в аргументах, равными приведённым в таблице, отсутствующие в таблице значения убрать — в таком виде данные встречаются в первоначальной редакции бюджета</dd><dt><code>diff</code></dt><dd>прибавить значения, приведённые в таблице, к значениям, полученным в результате предыдущих операций — в таком виде данные встречаются в поправках к первоначальной редакции бюджета</dd><dt><code>diffset</code></dt><dd>отменить все операции, сделанные в документах после указанного, и прибавить значения, приведённые в таблице — в таком виде данные встречаются в поправках к изменениям бюджета</dd><dt><code>move</code></dt><dd>переместить данные, подходящие под указанный в таблице шаблон — такие операции соответствуют текстовым поправкам губернатора «Изменить подразделы, виды расходов и т. п.»</dd></dl></dd>
 </dl>
 <p>Далее рассматриваются форматы отдельных файлов.</p>
 <dl>
 <dt id='2-tables-meta-authors'><code>meta/authors.csv</code></dt><dd>Авторы, которые внесли в <abbr title='Законодательное Собрание'>ЗС</abbr> какой-либо документ или поправку. Столбцы:<dl><dt><code>authorId</code></dt><dd>числовой идентификатор автора для связи с <a href='#2-tables-meta-documents'>таблицей документов</a></dd><dt><code>authorShortName</code></dt><dd>короткое имя автора для написания в узких столбцах таблиц документов, получаемых на последнем уровне</dd><dt><code>authorLongName</code></dt><dd>имя автора в том виде, в котором оно указано на сайте <abbr title='Законодательного Собрания'>ЗС</abbr></dd></dl></dd>
 <dt id='2-tables-meta-documents'><code>meta/documents.csv</code></dt><dd>Документы — проекты законов и поправки. Столбцы:<dl><dt><code>documentNumber</code></dt><dd>номер документа в <abbr title='Законодательном Собрании'>ЗС</abbr></dd><dt><code>documentDate</code></dt><dd>дата внесения документа в расширенном формате ISO (YYYY-MM-DD)</dd><dt><code>stageNumber</code></dt><dd>номер варианта закона (0 — первоначальный закон, 1 — первая корректировка, 2 — вторая и т.д.) для связи с <a href='#2-tables-meta-stages'>таблицей вариантов законов</a></dd><dt><code>amendmentFlag</code></dt><dd>тип проекта/поправки (0 — проект, после которого идут 1 — отдельно внесённые поправки, затем 2 — прочие изменения, приводящие проект закона к конечному виду, в котором он принимается)</dd><dt><code>authorId</code></dt><dd>числовой идентификатор автора (если автор известен, для amendmentFlag=2 считается неизвестным)</dd><dt><code>documentAssemblyUrl</code></dt><dd>ссылка на документ на сайте <abbr title='Законодательного Собрания'>ЗС</abbr>, содержащий данные (если он там опубликован)</dd></dl></dd>
-<dt id='2-tables-meta-stages'><code>meta/stages.csv</code></dt><dd>Варианты законов (на данный момент — одного закона 2014 года). Столбцы:<dl><dt><code>stageNumber</code></dt><dd>номер варианта закона</dd><dt><code>stageAssemblyUrl</code></dt><dd>ссылка на страницу с документами, поступившими в <abbr title='Законодательное Собрание'>ЗС</abbr> во время рассмотрения проекта этого варианта</dd></dl></dd>
+<dt id='2-tables-meta-stages'><code>meta/stages.csv</code></dt><dd>Варианты законов. Столбцы:<dl><dt><code>stageYear</code></dt><dd>первый год, на который распространяется закон</dd><dt><code>stageNumber</code></dt><dd>номер варианта закона для данного года</dd><dt><code>stageAssemblyUrl</code></dt><dd>ссылка на страницу с документами, поступившими в <abbr title='Законодательное Собрание'>ЗС</abbr> во время рассмотрения проекта этого варианта</dd></dl></dd>
 </dl>
 <dl class='downloads'>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAD1OOiMH3bkWrcSJRxYgGaTa/db/2-tables.out.zip' class='file'>2-tables.out.zip</a></code></dt><dd>архив с таблицами</dd>
 </dl>
 <h2 id='3-db'>База данных</h2>
+<p>Данные без избыточности и без различных типов операций — все изменения соответствуют операции <em>diff</em>.</p>
 <dl class='downloads'>
 <dt><code><a href='https://dl.dropboxusercontent.com/sh/zgnevck3cij1gm0/AAAqZSkbCAq0QiXNx7SRcamxa/db/db.sql' class='file'>db.sql</a></code></dt><dd>база данных в формате <abbr title='Structured Query Language, структурированный язык запросов'>sql</abbr> для <abbr title='системы управления базами данных'>СУБД</abbr> <a href='http://www.sqlite.org/' class='external'>SQLite</a></dd>
 </dl>
